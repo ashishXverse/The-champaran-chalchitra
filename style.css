@@ -1,0 +1,328 @@
+/* ===============================
+   Champaran चलचित्र - Full Style
+   =============================== */
+
+/* Root Variables */
+:root {
+    --bg-dark: #02060a;
+    --accent: #ff6b00;
+    --accent-light: #ffb347;
+    --muted: #cbd5e1;
+    --text: #ffffff;
+    --glass: rgba(0, 0, 0, 0.45);
+}
+
+/* Base Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    background: var(--bg-dark);
+    font-family: "Poppins", sans-serif;
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+/* ===============================
+   Background Video (Perfectly Sized)
+   =============================== */
+.bg-video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    filter: brightness(0.5) contrast(1.05) saturate(1.1);
+    background-color: #000;
+}
+
+/* ensure full fill for different aspect ratios */
+@media (min-aspect-ratio: 16/9) {
+    .bg-video {
+        height: 120vh;
+        width: auto;
+    }
+}
+
+@media (max-aspect-ratio: 16/9) {
+    .bg-video {
+        width: 120vw;
+        height: auto;
+    }
+}
+
+/* overlay for readability */
+.bg-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(3px);
+    z-index: 1;
+}
+
+/* Sound toggle button */
+.sound-btn {
+    position: fixed;
+    top: 20px;
+    right: 25px;
+    z-index: 6;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: var(--text);
+    font-size: 1.2rem;
+    padding: 10px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.sound-btn:hover {
+    transform: scale(1.08);
+    background: rgba(255, 255, 255, 0.14);
+}
+
+/* App content */
+.app {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+    text-align: center;
+}
+
+/* navigation */
+.topnav {
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 5;
+}
+
+.nav-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all .25s ease;
+}
+
+.nav-btn:hover {
+    transform: translateY(-3px);
+}
+
+.nav-btn.active {
+    background: linear-gradient(180deg, rgba(255, 107, 0, 0.18), rgba(255, 183, 71, 0.1));
+    box-shadow: 0 6px 20px rgba(255, 107, 0, 0.18);
+}
+
+/* pages container */
+.pages {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-top: 80px;
+    padding-bottom: 60px;
+}
+
+.page {
+    display: none;
+    padding: 36px;
+    border-radius: 14px;
+    backdrop-filter: blur(6px);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.25));
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.page.active {
+    display: block;
+    animation: fadeIn .45s ease both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* text styles */
+.huge-title {
+    font-size: clamp(2rem, 7vw, 4.5rem);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #fff, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+.lead {
+    color: var(--muted);
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
+
+.small-note {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+}
+
+/* about & notify */
+#about h2,
+#notify h2 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+    color: var(--accent-light);
+}
+
+#about p,
+#notify p {
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+}
+
+/* notify form */
+.notify-form {
+    margin-top: 14px;
+    text-align: center;
+}
+
+.form-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.notify-form input[type="email"] {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: none;
+    width: 260px;
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--text);
+    font-size: 1rem;
+    outline: none;
+    transition: 0.2s;
+}
+
+.notify-form input[type="email"]:focus {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.notify-form button {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    background: linear-gradient(180deg, var(--accent), var(--accent-light));
+    color: #111;
+    transition: transform .2s ease;
+}
+
+.notify-form button:hover {
+    transform: scale(1.05);
+}
+
+.message {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* footer */
+.footer {
+    position: fixed;
+    bottom: 14px;
+    left: 18px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    z-index: 5;
+}
+
+/* links */
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* responsive */
+@media (max-width:640px) {
+    .topnav {
+        top: 10px;
+        gap: 6px;
+    }
+
+    .nav-btn {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+    }
+
+    .huge-title {
+        font-size: 2.4rem;
+    }
+
+    .page {
+        padding: 20px;
+        margin: 12px;
+    }
+
+    .notify-form input[type="email"] {
+        width: 100%;
+        max-width: 320px;
+    }
+}
+
+/* --- AR Creations credit line --- */
+.brand-under {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 1s ease both 0.4s;
+}
+
+.powered-text {
+    color: var(--muted);
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+}
+
+.powered-text span {
+    color: var(--accent-light);
+    font-weight: 600;
+    text-shadow: 0 0 8px rgba(255, 183, 71, 0.6);
+}

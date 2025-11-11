@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Champaran चलचित्र — Coming Soon</title>
+    <link rel="icon" href="assets/images/favicon.svg" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <!-- Background Video -->
+    <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto"
+        poster="assets/images/poster.jpg" aria-hidden="true">
+        <source src="assets/video/invitation_sample.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Dark overlay -->
+    <div class="bg-overlay" aria-hidden="true"></div>
+
+    <!-- Mute/Unmute button -->
+    <button id="soundToggle" class="sound-btn" aria-label="Toggle sound">🔇</button>
+
+    <!-- App content (SPA) -->
+    <div class="app" role="application" aria-labelledby="home-title">
+        <nav class="topnav" role="navigation" aria-label="Main navigation">
+            <button class="nav-btn" data-route="home">Home</button>
+            <button class="nav-btn" data-route="about">About</button>
+            <button class="nav-btn" data-route="notify">Notify</button>
+        </nav>
+
+        <main id="pages" class="pages">
+            <!-- Page 1: Home -->
+            <!-- Page 1: Home -->
+            <section id="home" class="page active" tabindex="-1" role="region" aria-labelledby="home-title">
+                <h1 id="home-title" class="huge-title">The Champaran चलचित्र</h1>
+                <p class="lead">Launching Soon</p>
+                <p class="small-note">A new chapter of local cinema & creative storytelling — stay tuned.</p>
+
+                <!-- 👇 Added AR Creations credit -->
+                <div class="brand-under">
+                    <p class="powered-text">A venture by <span>AR Creations</span></p>
+                </div>
+            </section>
+
+
+            <!-- Page 2: About -->
+            <section id="about" class="page" tabindex="-1" role="region" aria-labelledby="about-title">
+                <h2 id="about-title">About Champaran चलचित्र</h2>
+                <p>We craft invitation videos, promotional clips, and cinematic advertisements rooted in Champaran’s
+                    culture.</p>
+                <p>Our team blends traditional storytelling with modern visuals to create unforgettable media
+                    experiences.</p>
+            </section>
+
+            <!-- Page 3: Notify -->
+            <section id="notify" class="page" tabindex="-1" role="region" aria-labelledby="notify-title">
+                <h2 id="notify-title">Get Notified</h2>
+                <p class="contact-line">Follow us on Instagram: <a href="https://instagram.com/yourhandle"
+                        target="_blank" rel="noopener noreferrer">@yourhandle</a></p>
+                <p class="contact-line">Email: <a href="mailto:info@yourdomain.com">info@yourdomain.com</a></p>
+
+                <form id="notifyForm" class="notify-form" novalidate>
+                    <label for="email">Enter your email to be notified:</label>
+                    <div class="form-row">
+                        <input id="email" type="email" name="email" placeholder="you@example.com" required />
+                        <button type="submit">Notify Me</button>
+                    </div>
+                    <p id="formMsg" class="message" aria-live="polite"></p>
+                </form>
+            </section>
+        </main>
+
+        <footer class="footer" role="contentinfo">
+            <small>© 2025 Champaran चलचित्र</small>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
