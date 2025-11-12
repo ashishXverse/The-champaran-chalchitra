@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateSoundUI(isMuted) {
     if (!soundBtn) return;
+    // pressed = sound ON. So if isMuted === true -> aria-pressed = "false"
     soundBtn.textContent = isMuted ? '🔇' : '🔊';
     soundBtn.setAttribute('aria-pressed', String(!isMuted));
     soundBtn.setAttribute('aria-label', isMuted ? 'Sound off' : 'Sound on');
@@ -38,17 +39,20 @@ document.addEventListener('DOMContentLoaded', () => {
   if (bgVideo) {
     bgVideo.playsInline = true;
     bgVideo.setAttribute('playsinline', '');
-    bgVideo.setAttribute('muted', '');
+    // read saved preference (string 'true' means muted)
     const savedSound = localStorage.getItem(SOUND_KEY);
     const preferMuted = savedSound === null ? true : (savedSound === 'true');
-    bgVideo.muted = preferMuted;
-    updateSoundUI(preferMuted);
+
+    // enforce muted on load unless user explicitly set false
+    bgVideo.muted = Boolean(preferMuted);
+    updateSoundUI(bgVideo.muted);
 
     async function attemptPlay() {
       try { await bgVideo.play(); }
       catch (err) { console.debug('Autoplay retry pending:', err); }
     }
 
+    // try to play on load (muted preferred improves autoplay success)
     attemptPlay();
 
     document.addEventListener('visibilitychange', () => {
@@ -65,10 +69,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (soundBtn) {
       soundBtn.addEventListener('click', () => {
+        // toggle: if currently muted -> unmute; else mute
         const nowMuted = !bgVideo.muted;
+        // If unmuting, set muted=false only after a user gesture; it's already a click so ok.
         bgVideo.muted = nowMuted;
         updateSoundUI(nowMuted);
         localStorage.setItem(SOUND_KEY, String(nowMuted));
+        // attempt to play in case browser paused when muted=false
         if (!nowMuted) attemptPlay().catch(() => {});
       });
     }
@@ -101,7 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (subscribeForm) {
     subscribeForm.addEventListener('submit', (ev) => {
       ev.preventDefault();
-      const email = (subscribeEmail.value || '').trim().toLowerCase();
+      const emailRaw = (subscribeEmail.value || '').trim();
+      const email = emailRaw.toLowerCase();
       if (!email || !isValidEmail(email)) {
         subscribeMsg.textContent = 'Please enter a valid email address.';
         subscribeMsg.style.color = '#ff9b9b';
@@ -112,6 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (subs.includes(email)) {
         subscribeMsg.textContent = 'You are already subscribed.';
         subscribeMsg.style.color = '#ffd39b';
+        // ensure focusable and focus
+        subscribeMsg.setAttribute('tabindex', '-1');
         subscribeMsg.focus();
         return;
       }
@@ -120,7 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
       subscribeMsg.textContent = "Thanks — we'll notify you!";
       subscribeMsg.style.color = '#bfffe6';
       subscribeForm.reset();
-      subscribeMsg.focus && subscribeMsg.focus();
+      subscribeMsg.setAttribute('tabindex', '-1');
+      subscribeMsg.focus();
     });
   }
 
@@ -154,7 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
       contactMsg.textContent = 'Thanks — your message has been sent (saved locally).';
       contactMsg.style.color = '#bfffe6';
       contactForm.reset();
-      contactMsg.focus && contactMsg.focus();
+      contactMsg.setAttribute('tabindex', '-1');
+      contactMsg.focus();
     });
   }
 
@@ -172,7 +184,14 @@ document.addEventListener('DOMContentLoaded', () => {
             url: pageUrl
           });
         } catch {}
-      } else alert('Share is not supported on this device — try copying the link.');
+      } else {
+        // inline fallback
+        const fallbackNotice = document.createElement('div');
+        fallbackNotice.className = 'share-fallback';
+        fallbackNotice.textContent = 'Share is not supported on this device — try copying the link.';
+        document.body.appendChild(fallbackNotice);
+        setTimeout(() => fallbackNotice.remove(), 2200);
+      }
     });
   }
 
@@ -180,8 +199,9 @@ document.addEventListener('DOMContentLoaded', () => {
     copyLinkBtn.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(pageUrl);
+        const original = copyLinkBtn.textContent;
         copyLinkBtn.textContent = 'Link copied!';
-        setTimeout(() => { copyLinkBtn.textContent = 'Copy link'; }, 1800);
+        setTimeout(() => { copyLinkBtn.textContent = original; }, 1800);
       } catch {
         alert('Copy failed. You can copy the URL from the address bar.');
       }
@@ -200,14 +220,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalVideo = q('#modalVideo');
   const closeTrailer = q('#closeTrailer');
   const gotoAbout = q('#gotoAbout');
+  const mainContent = q('main');
 
   function openModal() {
     if (!trailerModal) return;
     trailerModal.setAttribute('aria-hidden', 'false');
+    // hide main content for screen readers
+    if (mainContent) mainContent.setAttribute('aria-hidden', 'true');
     if (bgVideo && !bgVideo.paused) bgVideo.pause();
     try {
       modalVideo.currentTime = 0;
-      modalVideo.play();
+      modalVideo.play().catch(() => {});
     } catch {}
     closeTrailer && closeTrailer.focus();
   }
@@ -215,6 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function closeModal() {
     if (!trailerModal) return;
     trailerModal.setAttribute('aria-hidden', 'true');
+    if (mainContent) mainContent.removeAttribute('aria-hidden');
     if (modalVideo && !modalVideo.paused) modalVideo.pause();
     if (bgVideo && bgVideo.paused) bgVideo.play().catch(() => {});
     openTrailer && openTrailer.focus();
@@ -234,16 +258,17 @@ document.addEventListener('DOMContentLoaded', () => {
   if (quickForm) {
     quickForm.addEventListener('submit', (ev) => {
       ev.preventDefault();
-      const email = (quickEmail.value || '').trim();
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(email)) {
+      const emailRaw = (quickEmail.value || '').trim();
+      const email = emailRaw.toLowerCase();
+      if (!email || !isValidEmail(email)) {
         quickEmail.focus();
         quickEmail.style.boxShadow = '0 0 0 3px rgba(255,100,100,0.12)';
         setTimeout(() => quickEmail.style.boxShadow = '', 1500);
         return;
       }
       const subs = JSON.parse(localStorage.getItem(SUB_KEY) || '[]');
-      if (!subs.includes(email.toLowerCase())) {
-        subs.push(email.toLowerCase());
+      if (!subs.includes(email)) {
+        subs.push(email);
         localStorage.setItem(SUB_KEY, JSON.stringify(subs));
       }
       quickEmail.value = '';
@@ -261,8 +286,9 @@ document.addEventListener('DOMContentLoaded', () => {
   copySmall && copySmall.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(location.href);
+      const original = copySmall.textContent;
       copySmall.textContent = 'Copied!';
-      setTimeout(() => copySmall.textContent = 'Copy link', 1400);
+      setTimeout(() => copySmall.textContent = original, 1400);
     } catch {
       alert('Copy not available');
     }
