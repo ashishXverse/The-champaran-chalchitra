@@ -2,85 +2,158 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Champaran चलचित्र — Coming Soon</title>
-    <link rel="icon" href="assets/images/favicon.svg" />
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Champaran चलचित्र — Coming Soon</title>
+  <link rel="icon" href="assets/images/favicon.svg" />
+  <meta name="description" content="Champaran चलचित्र — invitation videos, promotional clips and cinematic advertisements rooted in Champaran culture." />
+  <meta name="theme-color" content="#02060a" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-    <!-- Background Video -->
-        <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto" poster="poster.jpg" aria-hidden="true">
-  <source src="invitation_sample.mp4" type="video/mp4" />
-  Your browser does not support the video tag.
-</video>
+  <a class="skip-link" href="#pages">Skip to content</a>
 
+  <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="metadata"
+    poster="assets/images/poster.jpg" aria-hidden="true">
+    <source src="invitation_sample.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
 
-    <!-- Dark overlay -->
-    <div class="bg-overlay" aria-hidden="true"></div>
+  <div class="bg-overlay" aria-hidden="true"></div>
 
-    <!-- Mute/Unmute button -->
-    <button id="soundToggle" class="sound-btn" aria-label="Toggle sound">🔇</button>
+  <button id="soundToggle" class="sound-btn" aria-pressed="true" aria-label="Toggle sound">🔇</button>
 
-    <!-- App content (SPA) -->
-    <div class="app" role="application" aria-labelledby="home-title">
-        <nav class="topnav" role="navigation" aria-label="Main navigation">
-            <button class="nav-btn" data-route="home">Home</button>
-            <button class="nav-btn" data-route="about">About</button>
-            <button class="nav-btn" data-route="notify">Notify</button>
-        </nav>
+  <div class="app" role="application" aria-labelledby="home-title">
+    <nav class="topnav" role="navigation" aria-label="Main navigation">
+      <button class="nav-btn" data-route="home">Home</button>
+      <button class="nav-btn" data-route="about">About</button>
+      <button class="nav-btn" data-route="notify">Notify</button>
+    </nav>
 
-        <main id="pages" class="pages">
-            <!-- Page 1: Home -->
-            <!-- Page 1: Home -->
-            <section id="home" class="page active" tabindex="-1" role="region" aria-labelledby="home-title">
-                <h1 id="home-title" class="huge-title">The Champaran चलचित्र</h1>
-                <p class="lead">Launching Soon</p>
-                <p class="small-note">A new chapter of local cinema & creative storytelling — stay tuned.</p>
+    <main id="pages" class="pages">
 
-                <!-- 👇 Added AR Creations credit -->
-                <div class="brand-under">
-                    <p class="powered-text">A venture by <span>AR Creations</span></p>
-                </div>
-            </section>
+      <section id="home" class="page active" tabindex="-1" role="region" aria-labelledby="home-title">
+        <div class="hero-grid">
+          <div class="hero-left">
+            <h1 id="home-title" class="huge-title">
+              The Champaran <span class="title-bold">चलचित्र</span>
+            </h1>
 
+            <p class="lead">Launching Soon</p>
 
-            <!-- Page 2: About -->
-            <section id="about" class="page" tabindex="-1" role="region" aria-labelledby="about-title">
-                <h2 id="about-title">About Champaran चलचित्र</h2>
-                <p>We craft invitation videos, promotional clips, and cinematic advertisements rooted in Champaran’s
-                    culture.</p>
-                <p>Our team blends traditional storytelling with modern visuals to create unforgettable media
-                    experiences.</p>
-            </section>
+            <div class="marquee" aria-hidden="true">
+              <div class="marquee-track">
+                <span>Local stories • Cinematic visuals • Invitation videos • Promotional clips —</span>
+                <span>Local stories • Cinematic visuals • Invitation videos • Promotional clips —</span>
+              </div>
+            </div>
 
-            <!-- Page 3: Notify -->
-            <section id="notify" class="page" tabindex="-1" role="region" aria-labelledby="notify-title">
-                <h2 id="notify-title">Get Notified</h2>
-                <p class="contact-line">Follow us on Instagram: <a href="https://instagram.com/yourhandle"
-                        target="_blank" rel="noopener noreferrer">@yourhandle</a></p>
-                <p class="contact-line">Email: <a href="mailto:info@yourdomain.com">info@yourdomain.com</a></p>
+            <p class="small-note">A new chapter of local cinema & creative storytelling — stay tuned.</p>
 
-                <form id="notifyForm" class="notify-form" novalidate>
-                    <label for="email">Enter your email to be notified:</label>
-                    <div class="form-row">
-                        <input id="email" type="email" name="email" placeholder="you@example.com" required />
-                        <button type="submit">Notify Me</button>
-                    </div>
-                    <p id="formMsg" class="message" aria-live="polite"></p>
-                </form>
-            </section>
-        </main>
+            <div class="cta-row">
+              <button id="openTrailer" class="btn btn-primary">▶ Watch Trailer</button>
 
-        <footer class="footer" role="contentinfo">
-            <small>© 2025 Champaran चलचित्र</small>
-        </footer>
-    </div>
+              <form id="quickSubscribe" class="quick-subscribe" novalidate>
+                <label for="quickEmail" class="visually-hidden">Email</label>
+                <input id="quickEmail" type="email" placeholder="you@example.com" aria-label="Email for updates" />
+                <button type="submit" class="btn btn-ghost">Subscribe</button>
+              </form>
+            </div>
 
-    <script src="script.js"></script>
+            <div class="share-row-small">
+              <button id="copyLinkSmall" class="share-btn-small">Copy link</button>
+              <a href="https://www.instagram.com/the_champaran_chalchitra" target="_blank" rel="noopener" class="social-link">Instagram</a>
+            </div>
+          </div>
+
+          <div class="hero-right" aria-hidden="true">
+            <div class="film-accent">
+              <div class="film-frame"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-under">
+          <p class="powered-text">A venture by <span>AR Creations</span></p>
+        </div>
+
+        <div class="scroll-indicator" aria-hidden="true" title="Go to About" role="button" tabindex="0" id="gotoAbout">
+          <span class="arrow">⌄</span>
+          <small>About</small>
+        </div>
+
+        <div id="trailerModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="trailerTitle">
+          <div class="modal-inner" role="document">
+            <button id="closeTrailer" class="modal-close" aria-label="Close trailer">✕</button>
+            <h3 id="trailerTitle" class="modal-title">Watch Trailer</h3>
+            <video id="modalVideo" controls playsinline preload="metadata" poster="assets/images/trailer_poster.jpg">
+              <source src="Business_Trailer_for_Champaran_Chalchitra.mp4" type="video/mp4" />
+              Your browser does not support embedded video.
+            </video>
+          </div>
+        </div>
+
+        <div class="share-row" aria-hidden="false">
+          <button id="shareBtn" class="share-btn">Share</button>
+          <button id="copyLink" class="share-btn">Copy link</button>
+        </div>
+      </section>
+
+      <section id="about" class="page" tabindex="-1" role="region" aria-labelledby="about-title">
+        <h2 id="about-title">About Champaran चलचित्र</h2>
+        <p>We craft invitation videos, promotional clips, and cinematic advertisements rooted in Champaran’s culture.</p>
+        <p>Our team blends traditional storytelling with modern visuals to create unforgettable media experiences.</p>
+      </section>
+
+      <section id="notify" class="page" tabindex="-1" role="region" aria-labelledby="notify-title">
+        <h2 id="notify-title">Get Notified</h2>
+        <p class="contact-line">Follow us on Instagram:
+          <a href="https://www.instagram.com/the_champaran_chalchitra" target="_blank" rel="noopener noreferrer">@the_champaran_chalchitra</a>
+        </p>
+        <p class="contact-line">Email:
+          <a href="mailto:arcreations221025@gmail.com">arcreations221025@gmail.com</a>
+        </p>
+
+        <div class="card notify-card" aria-labelledby="subscribe-title">
+          <h3 id="subscribe-title">Subscribe for updates</h3>
+          <form id="subscribeForm" class="notify-form" novalidate>
+            <label for="subscribeEmail">Enter your email to be notified:</label>
+            <div class="form-row">
+              <input id="subscribeEmail" type="email" name="email" placeholder="you@example.com" required aria-required="true" />
+              <button type="submit">Notify Me</button>
+            </div>
+            <p id="subscribeMsg" class="message" aria-live="polite" tabindex="-1"></p>
+          </form>
+        </div>
+
+        <div class="card contact-card" aria-labelledby="contact-title" style="margin-top:18px;">
+          <h3 id="contact-title">Contact / Send a message</h3>
+          <form id="contactForm" class="contact-form" novalidate>
+            <label for="contactName">Your name (optional)</label>
+            <input id="contactName" type="text" name="name" placeholder="Your name" />
+
+            <label for="contactEmail">Your email</label>
+            <input id="contactEmail" type="email" name="email" placeholder="you@example.com" required aria-required="true" />
+
+            <label for="contactMessage">Message</label>
+            <textarea id="contactMessage" name="message" rows="4" placeholder="Write a short message..." required aria-required="true"></textarea>
+
+            <div class="form-row" style="justify-content:center; margin-top:8px;">
+              <button type="submit">Send Message</button>
+            </div>
+            <p id="contactMsg" class="message" aria-live="polite" tabindex="-1"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+      <small id="copyright">© <span id="year"></span> Champaran चलचित्र</small>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 
-
 </html>
-
