@@ -16,13 +16,14 @@
 
   <video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="metadata"
     poster="assets/images/poster.jpg" aria-hidden="true">
-    <source src="invitation_sample.mp4" type="video/mp4" />
+    <source src="assets/videos/invitation_sample.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
 
   <div class="bg-overlay" aria-hidden="true"></div>
 
-  <button id="soundToggle" class="sound-btn" aria-pressed="true" aria-label="Toggle sound">🔇</button>
+  <!-- removed aria-pressed from HTML; JS sets semantics on load -->
+  <button id="soundToggle" class="sound-btn" aria-label="Toggle sound">🔇</button>
 
   <div class="app" role="application" aria-labelledby="home-title">
     <nav class="topnav" role="navigation" aria-label="Main navigation">
@@ -88,7 +89,7 @@
             <button id="closeTrailer" class="modal-close" aria-label="Close trailer">✕</button>
             <h3 id="trailerTitle" class="modal-title">Watch Trailer</h3>
             <video id="modalVideo" controls playsinline preload="metadata" poster="assets/images/trailer_poster.jpg">
-              <source src="Business_Trailer_for_Champaran_Chalchitra.mp4" type="video/mp4" />
+              <source src="assets/videos/Business_Trailer_for_Champaran_Chalchitra.mp4" type="video/mp4" />
               Your browser does not support embedded video.
             </video>
           </div>
